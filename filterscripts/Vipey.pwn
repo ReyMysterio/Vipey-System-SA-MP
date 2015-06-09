@@ -11,9 +11,6 @@
 #include <sscanf2>
 #include <timestamptodate>
 
-//Defina aqui o diretório das contas do seu servidor
-#define PASTA_CONTAS	"Diretorio/Contas"
-
 //===== [ COLORS ] =====//
 #define VERMELHO					0xFF0000FF
 #define AZUL_BEST					0x1E90FFFF
@@ -255,16 +252,10 @@ CMD:setarvipoff(playerid, params[])
 	new idName[64], dias;
 	if(!IsPlayerAdmin(playerid)) return SendClientMessage(playerid, VERMELHO, "Você não é um admin logado na RCON e não pode usar esse comando!");
 	if(sscanf(params, "s[64]d", idName, dias)) return SendClientMessage(playerid, VERMELHO, "Use: /SetarVIPOff (nome-do-jogador) (Dias)");
-	format(String, sizeof(String), PASTA_CONTAS, idName);	
-	if(DOF2_FileExists(String))
-	{
-		if(dias > 60) return SendClientMessage(playerid, VERMELHO, "Você não pode dar mais que 60 dias de VIP! Tente de novo!");
-		SetarV(playerid, idName, dias);
-		SendClientFormat(playerid, AZUL_BEST, "Você deu %d dias de VIP para o(a) jogador(a) %s", dias, idName);
-		return 1;
-	}
-	else SendClientMessage(playerid, VERMELHO, "Esse jogador não existe! Por favor verifique se o nome está correto!");
-	return 1;	
+	if(dias > 60) return SendClientMessage(playerid, VERMELHO, "Você não pode dar mais que 60 dias de VIP! Tente de novo!");
+	SetarV(playerid, idName, dias);
+	SendClientFormat(playerid, AZUL_BEST, "Você deu %d dias de VIP para o(a) jogador(a) %s", dias, idName);
+	return 1;
 }
 
 CMD:removervip(playerid, params[])
