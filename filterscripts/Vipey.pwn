@@ -11,6 +11,9 @@
 #include <sscanf2>
 #include <timestamptodate>
 
+//Defina aqui o diretório das contas do seu servidor
+#define PASTA_CONTAS	"Diretorio/Contas"
+
 //===== [ COLORS ] =====//
 #define VERMELHO					0xFF0000FF
 #define AZUL_BEST					0x1E90FFFF
@@ -238,13 +241,30 @@ CMD:setarvip(playerid, params[])
 	if(IsPlayerConnected(ID))
 	{
 		if(dias > 60) return SendClientMessage(playerid, VERMELHO, "Você não pode dar mais que 60 dias de VIP! Tente de novo!");
-		SetarV(ID, dias);
-		SendClientFormat(playerid, AZUL_BEST, "Você deu %d de VIP para o(a) jogador(a) %s[%d]", dias, PlayerName(ID), ID);
+		SetarV(playerid, PlayerName(ID), dias);
+		SendClientFormat(playerid, AZUL_BEST, "Você deu %d dias de VIP para o(a) jogador(a) %s[%d]", dias, PlayerName(ID), ID);
 		SendClientFormat(ID, AZUL_BEST, "O(A) Administrador(a) da RCON %s deu %d dias de VIP para você!", PlayerName(playerid), dias);
 		return 1;
 	}
 	else SendClientMessage(playerid, VERMELHO, "Jogador não conectado!");
 	return 1;
+}
+
+CMD:setarvipoff(playerid, params[])
+{
+	new idName[64], dias;
+	if(!IsPlayerAdmin(playerid)) return SendClientMessage(playerid, VERMELHO, "Você não é um admin logado na RCON e não pode usar esse comando!");
+	if(sscanf(params, "s[64]d", idName, dias)) return SendClientMessage(playerid, VERMELHO, "Use: /SetarVIPOff (nome-do-jogador) (Dias)");
+	format(String, sizeof(String), PASTA_CONTAS, idName);	
+	if(DOF2_FileExists(String))
+	{
+		if(dias > 60) return SendClientMessage(playerid, VERMELHO, "Você não pode dar mais que 60 dias de VIP! Tente de novo!");
+		SetarV(playerid, idName, dias);
+		SendClientFormat(playerid, AZUL_BEST, "Você deu %d dias de VIP para o(a) jogador(a) %s", dias, idName);
+		return 1;
+	}
+	else SendClientMessage(playerid, VERMELHO, "Esse jogador não existe! Por favor verifique se o nome está correto!");
+	return 1;	
 }
 
 CMD:removervip(playerid, params[])
@@ -449,14 +469,12 @@ CMD:corvip(playerid, params[])
 	return 1;
 }
 
-stock SetarV(playerid, dias)
+stock SetarV(playerid, playerName[], dias)
 {
-	if(!IsPlayerVIP(playerid))
+	format(String, sizeof(String), "/VIP/%s.ini", playerName);
+	if(!DOF2_FileExists(String))
 	{
-		new StringName[MAX_PLAYER_NAME];
 		venvip = (gettime() + (dias * 24 * 60 * 60));
-		GetPlayerName(playerid, StringName, sizeof(StringName));
-		format(String, sizeof(String), "/VIPs/%s.ini", StringName);
 		DOF2_CreateFile(String);
 		DOF2_SetInt(String, "Vencimento", venvip);
 		DOF2_SetInt(String, "CorVIP", 1);
