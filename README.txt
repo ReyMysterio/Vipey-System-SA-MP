@@ -1,4 +1,4 @@
-﻿Vipey System 1.1 - Sistema de VIP By: ReyMysterio
+﻿Vipey System 1.2.1 - Sistema de VIP By: ReyMysterio
 
 JOGUE TODAS AS PASTA NO DIRETÓRIO DO SEU SERVIDOR 
 
