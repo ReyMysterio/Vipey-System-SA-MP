@@ -59,12 +59,12 @@ public OnPlayerSpawn(playerid)
 			if( gettime() > DOF2_GetInt(Str, "Vencimento") ) { 
 
 				RemoverV(playerid); 
-				SendClientMessage(playerid, VERMELHO, "Seu VIP expirou e já não tem mais acesso aos comandos exclusivo VIP!"); 
+				SendClientMessage(playerid, VERMELHO, "Seu VIP expirou e jÃ¡ nÃ£o tem mais acesso aos comandos exclusivo VIP!"); 
 				return 1; 
 			} 
 			else { 
 
-				SendClientMessage(playerid, AZUL_BEST, "Você é um jogador VIP! Para ver o vencimento digite /Vencimento!"); 
+				SendClientMessage(playerid, AZUL_BEST, "VocÃª Ã© um jogador VIP! Para ver o vencimento digite /Vencimento!"); 
 				SetPVarInt(playerid, "Spawnou", 1); 
 				return 1; 
 			} 
@@ -85,41 +85,49 @@ public OnPlayerText(playerid, text[])
 
 			format(Str, sizeof(Str), "%s: {FFFFFF}[%d] [{FF00FF}VIP{FFFFFF}] %s", PlayerName(playerid), playerid, text); 
 			SendClientMessageToAll(GetPlayerColor(playerid), Str); 
+			return 0;
 		} 
 		else if( cor == 2) { 
 
 			format(Str, sizeof(Str), "%s: {FFFFFF}[%d] [{FFFF00}VIP{FFFFFF}] %s", PlayerName(playerid), playerid, text); 
 			SendClientMessageToAll(GetPlayerColor(playerid), Str); 
+			return 0;
 		} 
 		else if ( cor == 3) { 
 
 			format(Str, sizeof(Str), "%s: {FFFFFF}[%d] [{FFA500}VIP{FFFFFF}] %s", PlayerName(playerid), playerid, text); 
 			SendClientMessageToAll(GetPlayerColor(playerid), Str); 
+			return 0;
 		} 
 		else if( cor == 4) { 
 
 			format(Str, sizeof(Str), "%s: {FFFFFF}[%d] [{00FF00}VIP{FFFFFF}] %s", PlayerName(playerid), playerid, text); 
 			SendClientMessageToAll(GetPlayerColor(playerid), Str); 
+			return 0;
 		} 
 		else if( cor == 5) { 
 
 			format(Str, sizeof(Str), "%s: {FFFFFF}[%d] [{00FFFF}VIP{FFFFFF}] %s", PlayerName(playerid), playerid, text); 
 			SendClientMessageToAll(GetPlayerColor(playerid), Str); 
+			return 0;
 		} 
 		else if( cor == 6) { 
 
 			format(Str, sizeof(Str), "%s: {FFFFFF}[%d] [{0000FF}VIP{FFFFFF}] %s", PlayerName(playerid), playerid, text); 
 			SendClientMessageToAll(GetPlayerColor(playerid), Str); 
+			return 0;
 		} 
 		else if(cor == 7) { 
 
 			format(Str, sizeof(Str), "%s: {FFFFFF}[%d] [{B5B5B5}VIP{FFFFFF}] %s", PlayerName(playerid), playerid, text); 
 			SendClientMessageToAll(GetPlayerColor(playerid), Str); 
+			return 0;
 		} 
 		else if( cor == 8) { 
 
 			format(Str, sizeof(Str), "%s: {FFFFFF}[%d] [{FF0000}VIP{FFFFFF}] %s", PlayerName(playerid), playerid, text); 
 			SendClientMessageToAll(GetPlayerColor(playerid), Str); 
+			return 0;
 		} 
 	} 
     return 1; 
@@ -145,7 +153,7 @@ CMD:setarvip(playerid, params[])
 	new ID, dias; 
 
 	if(!IsPlayerAdmin(playerid)) 
-		return SendClientMessage(playerid, VERMELHO, "Comando inválido!"); 
+		return SendClientMessage(playerid, VERMELHO, "Comando invÃ¡lido!"); 
 
 	if(sscanf(params, "ud", ID, dias)) 
 		return SendClientMessage(playerid, VERMELHO, "Digite: /SetarVIP (id-do-jogador) (Dias)"); 
@@ -153,16 +161,16 @@ CMD:setarvip(playerid, params[])
 	if( IsPlayerConnected(ID) ) { 
 
 		if(dias > 30) 
-			return SendClientMessage(playerid, VERMELHO, "Você não pode dar mais que 30 dias de VIP! Tente de novo!"); 
+			return SendClientMessage(playerid, VERMELHO, "VocÃª nÃ£o pode dar mais que 30 dias de VIP! Tente de novo!"); 
 
 		SetarV(ID, dias); 
-		SendClientFormat(playerid, AZUL_BEST, "Você deu %d de VIP para o(a) jogador(a) %s[%d]", dias, PlayerName(ID), ID); 
-		SendClientFormat(ID, AZUL_BEST, "O(A) Staff %s setou %d dias de VIP para você!", PlayerName(playerid), dias); 
+		SendClientFormat(playerid, AZUL_BEST, "VocÃª deu %d de VIP para o(a) jogador(a) %s[%d]", dias, PlayerName(ID), ID); 
+		SendClientFormat(ID, AZUL_BEST, "O(A) Staff %s setou %d dias de VIP para vocÃª!", PlayerName(playerid), dias); 
 		return 1; 
 	} 
 	else { 
 
-		SendClientMessage(playerid, VERMELHO, "Jogador não conectado!"); 
+		SendClientMessage(playerid, VERMELHO, "Jogador nÃ£o conectado!"); 
 		return 1; 
 	} 
 } 
@@ -182,7 +190,7 @@ CMD:agendarvip(playerid, params[])
 	DOF2_SetInt(Str, "Vencimento", (gettime() + (dias * 86400) ) ); 
 	DOF2_SaveFile(); 
 
-	format(Str, sizeof(Str), "Você deu %d dias de VIP para %s!", dias, nick ); 
+	format(Str, sizeof(Str), "VocÃª deu %d dias de VIP para %s!", dias, nick ); 
 	SendClientMessage(playerid, -1, Str); 
 
 	return 1; 
@@ -193,7 +201,7 @@ CMD:removervip(playerid, params[])
 	new ID; 
 
 	if(!IsPlayerAdmin(playerid)) 
-		return SendClientMessage(playerid, VERMELHO, "Comando inválido!"); 
+		return SendClientMessage(playerid, VERMELHO, "Comando invÃ¡lido!"); 
 
 	if(sscanf(params, "u", ID)) 
 		return SendClientMessage(playerid, VERMELHO, "Digite: Use: /RemoverVip (id-do-jogador)"); 
@@ -203,14 +211,14 @@ CMD:removervip(playerid, params[])
 		if(IsPlayerVIP(ID)) 
 		{ 
 			RemoverV(ID); 
-			SendClientFormat(playerid, AZUL_BEST, "Você removeu o VIP do(a) jogador(a) %s[%d]!", PlayerName(ID), ID); 
+			SendClientFormat(playerid, AZUL_BEST, "VocÃª removeu o VIP do(a) jogador(a) %s[%d]!", PlayerName(ID), ID); 
 			SendClientFormat(ID, AZUL_BEST, "O(A) Staff %s removeu o seu VIP!", PlayerName(playerid)); 
 			return 1; 
 		} 
-		else SendClientMessage(playerid, VERMELHO, "Esse jogador não é VIP!"); 
+		else SendClientMessage(playerid, VERMELHO, "Esse jogador nÃ£o Ã© VIP!"); 
 		return 1;
 	} 
-	else SendClientMessage(playerid, VERMELHO, "Jogador não conectado!");
+	else SendClientMessage(playerid, VERMELHO, "Jogador nÃ£o conectado!");
 	return 1; 
 } 
 
@@ -226,18 +234,18 @@ CMD:vencimento(playerid)
 		localtime(Time: DOF2_GetInt(Str, "Vencimento"), tmStamp);
 			
 		new  szStr[64];
-		strftime(szStr, sizeof(szStr), "%d/%m/%Y às %X", tmStamp); 
+		strftime(szStr, sizeof(szStr), "%d/%m/%Y Ã s %X", tmStamp); 
 
 		format(Str, sizeof(Str), "{00FFFF}Nick: {FFFFFF}%s[{00FFFF}%d{FFFFFF}]\n\n", PlayerName(playerid), playerid); 
 		strcat(StringCat, Str); 
 		format(Str, sizeof(Str), "{00FFFF}Vencimento: {FFFFFF}%s \n\n", szStr); 
 		strcat(StringCat, Str); 
-		strcat(StringCat, "Aproveite o seu VIP até o último minuto!\n{00FF00}Creditos: {FFFFFF}ReyMysterio\n"); 
+		strcat(StringCat, "Aproveite o seu VIP atÃ© o Ãºltimo minuto!\n{00FF00}Creditos: {FFFFFF}ReyMysterio\n"); 
 
 		ShowPlayerDialog(playerid, 5000, DIALOG_STYLE_MSGBOX, "{FF0000}Vencimento", StringCat, "Fechar", #); 
 		return 1; 
     } 
-	else SendClientMessage(playerid, VERMELHO, "Você não tem permissão!");
+	else SendClientMessage(playerid, VERMELHO, "VocÃª nÃ£o tem permissÃ£o!");
 	return 1;
 } 
 
@@ -278,7 +286,7 @@ CMD:coletev(playerid)
 		SetPlayerArmour(playerid, 100.0); 
 		return 1; 
 	} 
-	else SendClientMessage(playerid, VERMELHO, "Você não tem permissão!");
+	else SendClientMessage(playerid, VERMELHO, "VocÃª nÃ£o tem permissÃ£o!");
 	return 1;
 } 
 
@@ -287,13 +295,13 @@ CMD:jetpackv(playerid)
 	if(IsPlayerVIP(playerid)) { 
 
 		if(IsPlayerInAnyVehicle(playerid)) 
-			return SendClientMessage(playerid, VERMELHO, "Você não pode utilizar esse comando em um veículo!"); 
+			return SendClientMessage(playerid, VERMELHO, "VocÃª nÃ£o pode utilizar esse comando em um veÃ­culo!"); 
 
 		SendClientMessage(playerid, VERDE, "Jetpack criado com sucesso!"); 
 		SetPlayerSpecialAction(playerid, 2); 
 		return 1; 
 	} 
-	else SendClientMessage(playerid, VERMELHO, "Você não tem permissão!"); 
+	else SendClientMessage(playerid, VERMELHO, "VocÃª nÃ£o tem permissÃ£o!"); 
 	return 1;
 } 
 
@@ -308,7 +316,7 @@ CMD:v(playerid, params[])
 		ChatVIP(COLOR_MAGENTA, StringText, playerid); 
 		return 1; 
 	} 
-	else SendClientMessage(playerid, VERMELHO, "Você não tem permissão!"); 
+	else SendClientMessage(playerid, VERMELHO, "VocÃª nÃ£o tem permissÃ£o!"); 
 	return 1; 
 } 
 
@@ -324,7 +332,7 @@ CMD:comandosvip(playerid)
 		ShowPlayerDialog(playerid, 5000, DIALOG_STYLE_MSGBOX, "{00FFFF}Comandos VIP", StringCat, "Fechar", #); 
 		return 1; 
 	} 
-	else SendClientMessage(playerid, VERMELHO, "Você não tem permissão!"); 
+	else SendClientMessage(playerid, VERMELHO, "VocÃª nÃ£o tem permissÃ£o!"); 
 	return 1; 
 } 
 
@@ -344,7 +352,7 @@ CMD:corvip(playerid, params[])
 		ShowPlayerDialog(playerid, DIALOG_COR_VIP, DIALOG_STYLE_LIST, "{00FF00}Cor VIP", StringCat, "Continuar", "Fechar"); 
 		return 1; 
 	} 
-	else SendClientMessage(playerid, VERMELHO, "Você não tem permissão!"); 
+	else SendClientMessage(playerid, VERMELHO, "VocÃª nÃ£o tem permissÃ£o!"); 
 	return 1; 
 } 
 
